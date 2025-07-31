@@ -1,0 +1,13 @@
+<html>
+<head><title>Dashboard</title></head>
+<body>
+    <h2>All Complaints</h2>
+    <ul>
+        <!--this is like a iteration of the for loop for that we use "%" after which we use the for loop-->
+        {% for complaint in complaints %}
+            <!--we get the values from the routes and add in dashboard-->
+            <li>{{ complaint.title }} ({{ complaint.status.value }}) - {{ complaint.location }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
