@@ -4,7 +4,7 @@ from complaints import get_location
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from logger import logger
-from email_notifier import send_email_notification
+from email_modifier import send_email_notification
 
 
 
