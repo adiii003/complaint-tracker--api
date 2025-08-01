@@ -62,14 +62,14 @@ def dashboard(request: Request):
 
 
 #this will mainly get me the logs regarding the timestamp, username, message
-@app.post("/complaints/logs")
+@router.post("/complaints/logs")
 def create_complaint(complaint: ComplaintModel):
     logger.info(f"Complaint created by user: {complaint.user_id}")
     return {"msg": "Complaint logged"}
 
 
 #this is just a mock of how the email is sent and no actual email is sent as of now. after this route is triggerd we go ahead with the hardcoded admin mail and then we get the messaged with the complaint part of the schema 
-@app.post("/complaints/mail")
+@router.post("/complaints/mail")
 def create_complaint(complaint: ComplaintModel):
     send_email_notification(
         to_email="admin@example.com",
