@@ -3,6 +3,10 @@ from models import Complaint
 from complaints import get_location
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
+from logger import logger
+from email_notifier import send_email_notification
+
+
 
 #here we are creating routes which means a chunk of your code is made, later on all are taken into a single file in main.py
 router = APIRouter()
@@ -56,3 +60,20 @@ def dashboard(request: Request):
     complaints = list(fake_db.values())  # get all complaints
     return templates.TemplateResponse("dashboard.html", {"request": request, "complaints": complaints})
 
+
+#this will mainly get me the logs regarding the timestamp, username, message
+@app.post("/complaints/logs")
+def create_complaint(complaint: ComplaintModel):
+    logger.info(f"Complaint created by user: {complaint.user_id}")
+    return {"msg": "Complaint logged"}
+
+
+#this is just a mock of how the email is sent and no actual email is sent as of now. after this route is triggerd we go ahead with the hardcoded admin mail and then we get the messaged with the complaint part of the schema 
+@app.post("/complaints/mail")
+def create_complaint(complaint: ComplaintModel):
+    send_email_notification(
+        to_email="admin@example.com",
+        subject="New Complaint Logged",
+        body=f"A new complaint was submitted by {complaint.user_id}"
+    )
+    return {"msg": "Complaint created"}
